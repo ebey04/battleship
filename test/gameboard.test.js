@@ -14,29 +14,6 @@ describe('gameboard length and width', () => {
     })
 } )
 
-describe('ship placement on gameboard', () => {
-    test('horizontal placement of ship works', () => {
-    const board = new Gameboard();
-    const ship = new Ship(3);
-
-    expect(board.placeShip(ship, [1, 2], "horizontal")).toEqual([
-        [1,2],
-        [1,3],
-        [1,4]
-        ]);
-    });
-    test('vertical placement of ship works', () => {
-    const board = new Gameboard();
-    const ship = new Ship(3);
-
-    expect(board.placeShip(ship, [1, 2], "vertical")).toEqual([
-        [1,2],
-        [2,2],
-        [3,2]
-        ]);
-    });
-})
-
 describe('board placement validity', () => {
     test('horizontal placement check', () => {
         const board = new Gameboard();
@@ -49,4 +26,15 @@ describe('board placement validity', () => {
 
         expect(board.placeShip(ship, [8,0], "vertical")).toBe(false)
     });
+})
+
+test('places a ship on the grid', () => {
+    const board = new Gameboard();
+    const ship = new Ship(3);
+
+    board.placeShip(ship, [4,0], "horizontal");
+
+    expect(board.grid[4][0]).toBe(ship);
+    expect(board.grid[4][0 + 1]).toBe(ship);
+    expect(board.grid[4][0 + 2]).toBe(ship);
 })

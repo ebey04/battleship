@@ -1,16 +1,20 @@
 class Gameboard {
-    constructor() {
-        this.grid = Array.from({length: 10}, () => 
-                    Array.from ({length: 10}, () => null));
-                }
+        constructor() {
+            this.grid = Array.from({length: 10}, () => 
+                        Array.from({length: 10}, () => null));
+                    }
 
         placeShip(ship, startingCoor, direction) {
             let plannedCoord = [];
             let startRow = startingCoor[0];
             let startCol = startingCoor[1];
 
-	if ((startCol < 0 || startCol > 9) || (startRow < 0 || startRow > 9)) {
-		return false; }
+            if (
+                startCol < 0 || startCol > 9 ||
+                startRow < 0 || startRow > 9
+            ) {
+                return false;
+            }
 
             for (let i = 0; i < ship.length; i++) {
                 let row = startRow;
@@ -18,21 +22,23 @@ class Gameboard {
 
                 if (direction === "horizontal") {
                     col = startCol + i;
-			if (col < 0 || col > 9) {
-				return false; };
-
+                    if (col < 0 || col > 9) {
+                        return false;
+                    }
                 } else if (direction === "vertical") {
                     row = startRow + i;
-			if (row < 0 || row > 9) {
-				return false; };
+                    if (row < 0 || row > 9) {
+                        return false;
+                    }
                 }
 
                 plannedCoord.push([row, col]);
             }
 
-            return plannedCoord;
-}
-
+            plannedCoord.forEach(([row, col]) => {
+                this.grid[row][col] = ship;
+        });
+    }
 }
 
 module.exports = Gameboard;
