@@ -36,3 +36,17 @@ describe('ship placement on gameboard', () => {
         ]);
     });
 })
+
+describe('board placement validity', () => {
+    test('horizontal placement check', () => {
+        const board = new Gameboard();
+        const ship = new Ship(3);
+        expect(board.placeShip(ship, [1,8], "horizontal")).toBe(false)
+    });
+    test('vertical placement check', () => {
+        const board = new Gameboard();
+        const ship = new Ship(3);
+
+        expect(board.placeShip(ship, [8,0], "vertical")).toBe(false)
+    });
+})
