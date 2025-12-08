@@ -37,4 +37,5 @@ test('places a ship on the grid', () => {
     expect(board.grid[4][0]).toBe(ship);
     expect(board.grid[4][0 + 1]).toBe(ship);
     expect(board.grid[4][0 + 2]).toBe(ship);
+    
 })
