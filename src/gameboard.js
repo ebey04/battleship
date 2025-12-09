@@ -52,7 +52,9 @@ class Gameboard {
             if (target !== null) {
                 target.hit();
             }
-
+            else {
+                this.missedShots.push([row, col]);
+            }
         }
 
 

@@ -60,3 +60,11 @@ test('if target acquired, increase ship hit counter', () => {
 
     expect(ship.hits).toBe(1)
 })
+
+test('if no target, add coordinates to missedShots array', () => {
+    const board = new Gameboard();
+
+    board.receiveAttack([4, 0]);
+
+    expect(board.missedShots).toEqual([[4,0]]);
+})
