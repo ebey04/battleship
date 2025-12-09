@@ -37,5 +37,16 @@ test('places a ship on the grid', () => {
     expect(board.grid[4][0]).toBe(ship);
     expect(board.grid[4][0 + 1]).toBe(ship);
     expect(board.grid[4][0 + 2]).toBe(ship);
-    
+
+})
+
+test('check shipB does not overlap shipA', () => {
+    const board = new Gameboard();
+    const shipA = new Ship(3);
+    const shipB = new Ship(4);
+
+    board.placeShip(shipA, [4,0], "horizontal");
+    board.placeShip(shipB, [4,1], "horizontal");
+
+    expect(board.grid[4][1]).toBe(shipA);
 })

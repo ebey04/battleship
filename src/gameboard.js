@@ -35,6 +35,12 @@ class Gameboard {
                 plannedCoord.push([row, col]);
             }
 
+            for (let [row, col] of plannedCoord) {
+                if (this.grid[row][col] !== null) {
+                    return false;
+                }
+            }
+
             plannedCoord.forEach(([row, col]) => {
                 this.grid[row][col] = ship;
         });
