@@ -6,17 +6,38 @@ const Player = require('./src/player');
 const human = newPlayer(false); 
 const computer = newPlayer(true); 
 
-//CREATE FLEET -HUMAN
-const carrier     = new Ship(5);
-const battleship  = new Ship(4);
-const destroyer   = new Ship(3);
-const submarine   = new Ship(3);
-const patrolBoat  = new Ship(2);
+const humanFleet = [
+    new Ship(5),
+    new Ship(4),
+    new Ship(3),
+    new Ship(3),
+    new Ship(2),
+];
 
-//CREATE FLEET -COMPUTER
-const carrier     = new Ship(5);
-const battleship  = new Ship(4);
-const destroyer   = new Ship(3);
-const submarine   = new Ship(3);
-const patrolBoat  = new Ship(2);
 
+const computerFleet = [
+    new Ship(5),
+    new Ship(4),
+    new Ship(3),
+    new Ship(3),
+    new Ship(2),
+];
+
+
+randomizeFleet(player, fleetArray) {
+    for (const ship in shipsArray) {
+        let placed = false;
+
+        while (!placed) {
+            const row = Math.floor(Math.random() * 10);
+            const col = Math.floor(Math.random() * 10);
+            const coord = [row, col];
+
+            const rand = Math.floor(Math.random() * 2); 
+            const directions = ['horizontal', 'vertical'];
+            const direction = directions[rand];
+
+            placed = player.board.placeShip(ship, coord, direction);
+        }
+    }
+}
