@@ -3,8 +3,8 @@ const Ship = require('./src/ship');
 const Player = require('./src/player');
 
 // CREATE PLAYERS
-const human = newPlayer(false); 
-const computer = newPlayer(true); 
+const human = new Player(false); 
+const computer = new Player(true); 
 
 const humanFleet = [
     new Ship(5),
@@ -24,8 +24,8 @@ const computerFleet = [
 ];
 
 
-randomizeFleet(player, fleetArray) {
-    for (const ship in shipsArray) {
+function randomizeFleet(player, fleetArray) {
+    for (const ship of fleetArray) {
         let placed = false;
 
         while (!placed) {
@@ -64,7 +64,7 @@ function handleTurn(coord) {
     currentPlayer.attack(opponent.board, coord);
 
     if (opponent.board.allShipsSunk()) {
-        endGame();
+        endGame(currentPlayer);
         return;
     }   
 
