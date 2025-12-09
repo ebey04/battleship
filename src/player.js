@@ -9,6 +9,7 @@ class Player {
 
     attack(opponentBoard, coord) {
         opponentBoard.receiveAttack(coord);
+        this.prevMoves.push(coord);
     }
 }
 
