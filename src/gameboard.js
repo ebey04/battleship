@@ -2,7 +2,8 @@ class Gameboard {
         constructor() {
             this.grid = Array.from({length: 10}, () => 
                         Array.from({length: 10}, () => null));
-                    }
+                    };
+            this.missedShots = [];
 
         placeShip(ship, startingCoor, direction) {
             let plannedCoord = [];
@@ -45,6 +46,11 @@ class Gameboard {
                 this.grid[row][col] = ship;
         });
     }
+
+
+
+
+
 }
 
 module.exports = Gameboard;
