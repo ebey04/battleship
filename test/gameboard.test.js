@@ -50,3 +50,13 @@ test('check shipB does not overlap shipA', () => {
 
     expect(board.grid[4][1]).toBe(shipA);
 })
+
+test('if target acquired, increase ship hit counter', () => {
+    const board = new Gameboard();
+    const ship = new Ship(3);
+
+    board.placeShip(ship, [4,0], "horizontal");
+    board.receiveAttack([4, 0]);
+
+    expect(ship.hits).toBe(1)
+})

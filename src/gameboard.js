@@ -2,8 +2,8 @@ class Gameboard {
         constructor() {
             this.grid = Array.from({length: 10}, () => 
                         Array.from({length: 10}, () => null));
-                    };
-            this.missedShots = [];
+            this.missedShots = []
+            }
 
         placeShip(ship, startingCoor, direction) {
             let plannedCoord = [];
@@ -46,7 +46,14 @@ class Gameboard {
                 this.grid[row][col] = ship;
         });
     }
+        receiveAttack([row, col]) {
+            const target = this.grid[row][col];
 
+            if (target !== null) {
+                target.hit();
+            }
+
+        }
 
 
 
