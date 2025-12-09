@@ -41,3 +41,10 @@ randomizeFleet(player, fleetArray) {
         }
     }
 }
+
+function getOpponent(player) {
+    return player === human ? computer : human;
+}
+
+let currentPlayer = human;
+
