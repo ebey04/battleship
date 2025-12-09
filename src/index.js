@@ -48,16 +48,25 @@ function getOpponent(player) {
 
 let currentPlayer = human;
 
+let gameOver = false;
+
+function endGame(winner) {
+    gameOver = true;
+    console.log(`${winner === human ? 'Human' : 'Computer'} wins!`);
+}
+
 
 function handleTurn(coord) {
+    if (gameOver) return;
+
     const opponent = getOpponent(currentPlayer);
 
     currentPlayer.attack(opponent.board, coord);
 
     if (opponent.board.allShipsSunk()) {
-    endGame();
-    return;
-}
+        endGame();
+        return;
+    }   
 
     currentPlayer = opponent;
 }
