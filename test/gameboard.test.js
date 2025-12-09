@@ -68,3 +68,45 @@ test('if no target, add coordinates to missedShots array', () => {
 
     expect(board.missedShots).toEqual([[4,0]]);
 })
+
+describe('status of all ships on the board', () => {
+    test('if all ships sunk return true', () => {
+        const board = new Gameboard();
+        const shipA = new Ship(3);
+        const shipB = new Ship(4);
+
+        board.placeShip(shipA, [4,0], "horizontal");
+        board.placeShip(shipB, [3,1], "horizontal");
+
+        shipA.hit();
+        shipA.hit();
+        shipA.hit();
+
+        shipB.hit();
+        shipB.hit();
+        shipB.hit();
+        shipB.hit();
+
+
+        expect(board.allShipsSunk()).toEqual(true);
+    });
+    test('if one ship is not sunk return false', () => {
+        const board = new Gameboard();
+        const shipA = new Ship(3);
+        const shipB = new Ship(4);
+
+        board.placeShip(shipA, [4,0], "horizontal");
+        board.placeShip(shipB, [3,1], "horizontal");
+
+        shipA.hit();
+        shipA.hit();
+        shipA.hit();
+
+        shipB.hit();
+        shipB.hit();
+
+        
+        expect(board.allShipsSunk()).toEqual(false);
+    })
+})
+

@@ -2,7 +2,8 @@ class Gameboard {
         constructor() {
             this.grid = Array.from({length: 10}, () => 
                         Array.from({length: 10}, () => null));
-            this.missedShots = []
+            this.missedShots = [];
+            this.ships = [];
             }
 
         placeShip(ship, startingCoor, direction) {
@@ -45,6 +46,8 @@ class Gameboard {
             plannedCoord.forEach(([row, col]) => {
                 this.grid[row][col] = ship;
         });
+
+        this.ships.push(ship);
     }
         receiveAttack([row, col]) {
             const target = this.grid[row][col];
@@ -57,7 +60,9 @@ class Gameboard {
             }
         }
 
-
+        allShipsSunk() {
+            return this.ships.every(ship => ship.isSunk())
+        }
 
 
 }
