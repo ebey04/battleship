@@ -48,3 +48,16 @@ function getOpponent(player) {
 
 let currentPlayer = human;
 
+
+function handleTurn(coord) {
+    const opponent = getOpponent(currentPlayer);
+
+    currentPlayer.attack(opponent.board, coord);
+
+    if (opponent.board.allShipsSunk()) {
+    endGame();
+    return;
+}
+
+    currentPlayer = opponent;
+}
