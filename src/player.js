@@ -8,6 +8,14 @@ class Player {
     }
 
     attack(opponentBoard, coord) {
+        if (this.isComputer) {
+            const row = Math.floor(Math.random() * 10);
+            const col = Math.floor(Math.random() * 10);
+            coord = [row, col];
+        }
+        if (this.prevMoves.some(move => move[0] === coord[0] && move[1] === coord[1])) {
+            return false;
+        }
         opponentBoard.receiveAttack(coord);
         this.prevMoves.push(coord);
     }
