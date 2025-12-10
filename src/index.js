@@ -6,6 +6,8 @@ const Player = require('./src/player');
 const human = new Player(false); 
 const computer = new Player(true); 
 
+// CREATE FLEETS
+
 const humanFleet = [
     new Ship(5),
     new Ship(4),
@@ -23,6 +25,7 @@ const computerFleet = [
     new Ship(2),
 ];
 
+// RANDOMIZE FLEET FUNCTION
 
 function randomizeFleet(player, fleetArray) {
     for (const ship of fleetArray) {
@@ -41,6 +44,8 @@ function randomizeFleet(player, fleetArray) {
         }
     }
 }
+
+// OPPONENT/TURN HANDLERS
 
 function getOpponent(player) {
     return player === human ? computer : human;
@@ -70,3 +75,14 @@ function handleTurn(coord) {
 
     currentPlayer = opponent;
 }
+
+// START THE GAME
+function startGame() {
+    randomizeFleet(human, humanFleet);
+    randomizeFleet(computer, computerFleet);
+
+    // Later: DOM.drawBoards(...);
+    console.log("Game started! Fleets placed.");
+}
+
+startGame();
