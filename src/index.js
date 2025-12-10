@@ -3,27 +3,13 @@ const Ship = require('./src/ship');
 const Player = require('./src/player');
 
 // CREATE PLAYERS
-const human = new Player(false); 
-const computer = new Player(true); 
+let human
+let computer 
 
 // CREATE FLEETS
 
-const humanFleet = [
-    new Ship(5),
-    new Ship(4),
-    new Ship(3),
-    new Ship(3),
-    new Ship(2),
-];
-
-
-const computerFleet = [
-    new Ship(5),
-    new Ship(4),
-    new Ship(3),
-    new Ship(3),
-    new Ship(2),
-];
+let humanFleet
+let computerFleet
 
 // RANDOMIZE FLEET FUNCTION
 
@@ -51,9 +37,8 @@ function getOpponent(player) {
     return player === human ? computer : human;
 }
 
-let currentPlayer = human;
-
-let gameOver = false;
+let currentPlayer
+let gameOver = false
 
 function endGame(winner) {
     gameOver = true;
@@ -66,20 +51,51 @@ function handleTurn(coord) {
 
     const opponent = getOpponent(currentPlayer);
 
-    currentPlayer.attack(opponent.board, coord);
+    if (currentPlayer === human) {
+        currentPlayer.attack(opponent.board, coord);
+    } else {
+        currentPlayer.attack(opponent.board);
+    }
 
     if (opponent.board.allShipsSunk()) {
         endGame(currentPlayer);
         return;
-    }   
+    }
 
     currentPlayer = opponent;
+
+    if (currentPlayer === computer) {
+        handleTurn(); 
+    }
 }
+
 
 // START THE GAME
 function startGame() {
+    human = new Player(false); 
+    computer = new Player(true); 
+
+    humanFleet = [
+    new Ship(5),
+    new Ship(4),
+    new Ship(3),
+    new Ship(3),
+    new Ship(2),
+];
+    computerFleet = [
+    new Ship(5),
+    new Ship(4),
+    new Ship(3),
+    new Ship(3),
+    new Ship(2),
+];
+
     randomizeFleet(human, humanFleet);
     randomizeFleet(computer, computerFleet);
+
+    currentPlayer = human;
+
+    gameOver = false;
 
     // Later: DOM.drawBoards(...);
     console.log("Game started! Fleets placed.");
