@@ -1,17 +1,22 @@
-const Gameboard = require('./src/gameboard');
-const Ship = require('./src/ship'); 
-const Player = require('./src/player');
+const Gameboard = require('./gameboard');
+const Ship = require('./ship');
+const Player = require('./player');
 
 // CREATE PLAYERS
-let human
-let computer 
+let human;
+let computer;
 
 // CREATE FLEETS
 
-let humanFleet
-let computerFleet
+let humanFleet;
+let computerFleet;
 
-// RANDOMIZE FLEET FUNCTION
+//STARTER LOGIC
+
+let currentPlayer;
+let gameOver = false
+
+// WORLD RULES/HELPER FUNCTIONS
 
 function randomizeFleet(player, fleetArray) {
     for (const ship of fleetArray) {
@@ -31,20 +36,16 @@ function randomizeFleet(player, fleetArray) {
     }
 }
 
-// OPPONENT/TURN HANDLERS
-
 function getOpponent(player) {
     return player === human ? computer : human;
 }
-
-let currentPlayer
-let gameOver = false
 
 function endGame(winner) {
     gameOver = true;
     console.log(`${winner === human ? 'Human' : 'Computer'} wins!`);
 }
 
+//MAIN GAMEPLAY ENGINE
 
 function handleTurn(coord) {
     if (gameOver) return;
@@ -68,7 +69,6 @@ function handleTurn(coord) {
         handleTurn(); 
     }
 }
-
 
 // START THE GAME
 function startGame() {
