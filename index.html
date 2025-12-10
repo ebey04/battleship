@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exploding Cat Battleship</title>
+</head>
+<body>
+<main>
+
+    <h1 id="title">Exploding Cat Battleship</h1>
+
+    <div id="boards-container" >
+
+        <!-- FLEET BOARD COLUMN -->
+        <div class="board-column">
+            <button id="randomize" type="button">Randomize Fleet</button>
+            <div class="board" id="fleet-board" aria-label="Fleet board"></div>
+            <h2 class="subheads">Your Fleet</h2>
+        </div>
+
+        <!-- ENEMY BOARD COLUMN -->
+        <div class="board-column">
+            <div class="board" id="enemy-board" aria-label="Enemy board"></div>
+            <h2 class="subheads">Enemy Waters</h2>
+        </div>
+    </div>
+
+    <!-- START GAME OVERLAY -->
+    <div id="overlay" class="hidden" role="dialog" aria-modal="true">
+        <button id="start-game" type="button">Start Game</button>
+    </div>
+
+    <!-- MESSAGE AREA -->
+    <div id="messages" aria-live="polite"></div>
+
+</main>
+
+    
+</body>
+</html>
