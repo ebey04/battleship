@@ -84,11 +84,45 @@ function enemyClickHandler(event) {
 
     renderFleetBoard(fleetBoard, human.board.grid);
     renderEnemyBoard(enemyBoard, computer.board.grid);
+
+const humanResult = computer.board.grid[row][col];
+
+    if (humanResult === "hit") {
+        messages.textContent = "Direct hit on the enemy!";
+    } else if (humanResult === "miss") {
+        messages.textContent = "Your shot missed the enemy cats.";
+    }
+
+    if (computer.board.allShipsSunk()) {
+        messages.textContent = "You win! All enemy cats exploded!";
+        return;
+    }
+
+    if (human.board.allShipsSunk()) {
+        messages.textContent = "Defeat... The enemy exploded your entire clowder.";
+        return;
+    }
+
+    const lastMove = computer.prevMoves[computer.prevMoves.length - 1];
+
+    if (lastMove) {
+        const [cRow, cCol] = lastMove;
+        const compResult = human.board.grid[cRow][cCol];
+
+        if (compResult === "hit") {
+            messages.textContent += " The enemy exploded one of your cats!";
+        } 
+        else if (compResult === "miss") {
+            messages.textContent += " The enemy missed their shot.";
+        }
+    }
 }
 
 deployBtn.addEventListener("click", () => {
     startGame();
     renderFleetBoard(fleetBoard, human.board.grid);
+
+    messages.textContent = "Fleet deployed! Begin your attack.";
 
     enemyBoard.addEventListener("click", enemyClickHandler);
 })

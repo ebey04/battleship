@@ -96,8 +96,6 @@ function startGame() {
     currentPlayer = human;
 
     gameOver = false;
-
-    // Later: DOM.drawBoards(...);
 }
 
 startGame();
