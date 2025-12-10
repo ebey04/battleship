@@ -50,15 +50,18 @@ class Gameboard {
         this.ships.push(ship);
     }
         receiveAttack([row, col]) {
-            const target = this.grid[row][col];
+        const target = this.grid[row][col];
 
-            if (target !== null) {
-                target.hit();
-            }
-            else {
-                this.missedShots.push([row, col]);
-            }
+        if (target !== null && target !== "hit" && target !== "miss") {
+            target.hit();
+            this.grid[row][col] = "hit";
+        } 
+        else {
+            this.missedShots.push([row, col]);
+            this.grid[row][col] = "miss";
         }
+    }
+
 
         allShipsSunk() {
             return this.ships.every(ship => ship.isSunk())

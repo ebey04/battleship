@@ -98,10 +98,9 @@ function startGame() {
     gameOver = false;
 
     // Later: DOM.drawBoards(...);
-    console.log("Game started! Fleets placed.");
 }
 
 startGame();
 
 
-module.exports = { startGame, handleTurn };
+module.exports = { startGame, handleTurn, human, computer};
