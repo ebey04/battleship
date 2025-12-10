@@ -1,7 +1,7 @@
 import { startGame, handleTurn } from './index.js';
 
 // STATIC HTML ELEMENTS
-const randomizeBtn = document.getElementById('randomize');
+const deployBtn    = document.getElementById('deploy');
 const fleetBoard   = document.getElementById('fleet-board');
 const enemyBoard   = document.getElementById('enemy-board');
 const overlay      = document.getElementById('overlay');
