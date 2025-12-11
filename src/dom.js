@@ -1,5 +1,6 @@
 import { startGame, handleTurn, human, computer} from './index.js';
 import catYowl from "./sounds/cat-yowl.mp3";
+import angryCat from "./sounds/angry-cat.mp3"
 
 
 // STATIC HTML ELEMENTS
@@ -31,8 +32,6 @@ function showMessage(text, persistent = false) {
     }
 }
 
-
-
 function gridCreation(boardElement) {
     for (let i = 0; i < 10; i++) {
         for (let j = 0; j < 10; j++) { 
@@ -45,8 +44,13 @@ function gridCreation(boardElement) {
         }
     }
 
+//SOUNDS
+
 const yowlSound = new Audio(catYowl);
 yowlSound.preload = "auto";
+
+const explodeSound = new Audio(angryCat);
+explodeSound.preload = "auto"
 
 startGameBtn.addEventListener("click", () => {
     yowlSound.currentTime = 0;
@@ -58,6 +62,8 @@ startGameBtn.addEventListener("click", () => {
     gridCreation(enemyBoard)
     deployBtn.classList.remove("hidden");
 })
+
+// BOARD RENDERING
 
 function renderFleetBoard(boardElement, grid) {
     const cells = boardElement.querySelectorAll(".cell");
@@ -103,6 +109,9 @@ function renderEnemyBoard(boardElement, grid) {
         }
     }
 }
+
+//ENEMY CLICK HANDLER 
+
 let gameOver = false;
 
 function enemyClickHandler(event) {
@@ -121,6 +130,10 @@ function enemyClickHandler(event) {
 const humanResult = computer.board.grid[row][col];
 
     if (!gameOver && humanResult === "hit") {
+        explodeSound.currentTime = 0;
+        explodeSound.volume = 0.4;
+        explodeSound.play();
+
         showMessage("Direct hit to the enemy's clowder!");
     } else if (!gameOver && humanResult === "miss") {
         showMessage("Your shot missed the enemy cats.");
@@ -147,6 +160,10 @@ const humanResult = computer.board.grid[row][col];
         const compResult = human.board.grid[cRow][cCol];
 
         if (compResult === "hit") {
+        explodeSound.currentTime = 0;
+        explodeSound.volume = 0.4;
+        explodeSound.play();
+        
             setTimeout(() => {
             if (!gameOver) showMessage("The enemy exploded one of your cats!");
             }, 2000);
@@ -158,6 +175,8 @@ const humanResult = computer.board.grid[row][col];
         }
     }
 }
+
+// DEPLOY BUTTON
 
 deployBtn.addEventListener("click", () => {
     startGame();
