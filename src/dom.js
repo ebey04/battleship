@@ -10,8 +10,15 @@ import catYowl from "./sounds/cat-yowl.mp3";
     const deployBtn = document.getElementById("deploy");
     const messages = document.getElementById("messages");
 
+// --- MESSAGE DISPLAY FUNCTION ---
+function showMessage(text) {
+    messages.textContent = text;
+    messages.style.display = "block";
 
-console.log("dom.js loaded");
+    setTimeout(() => {
+        messages.style.display = "none";
+    }, 2000);
+}
 
 
 
@@ -101,18 +108,18 @@ function enemyClickHandler(event) {
 const humanResult = computer.board.grid[row][col];
 
     if (humanResult === "hit") {
-        messages.textContent = "Direct hit on the enemy!";
+        showMessage("Direct hit on the enemy!");
     } else if (humanResult === "miss") {
-        messages.textContent = "Your shot missed the enemy cats.";
+        showMessage("Your shot missed the enemy cats.");
     }
 
     if (computer.board.allShipsSunk()) {
-        messages.textContent = "You win! All enemy cats exploded!";
+        showMessage("You win! All enemy cats exploded!");
         return;
     }
 
     if (human.board.allShipsSunk()) {
-        messages.textContent = "Defeat... The enemy exploded your entire clowder.";
+        showMessage("Defeat... The enemy exploded your entire clowder.");
         return;
     }
 
@@ -123,10 +130,14 @@ const humanResult = computer.board.grid[row][col];
         const compResult = human.board.grid[cRow][cCol];
 
         if (compResult === "hit") {
-            messages.textContent += " The enemy exploded one of your cats!";
+            setTimeout(() => {
+            showMessage("The enemy exploded one of your cats!");
+            }, 1500);
         } 
         else if (compResult === "miss") {
-            messages.textContent += " The enemy missed their shot.";
+            setTimeout(() => {
+                showMessage(" The enemy missed their shot.")
+            }, 1500);
         }
     }
 }
@@ -135,7 +146,7 @@ deployBtn.addEventListener("click", () => {
     startGame();
     renderFleetBoard(fleetBoard, human.board.grid);
 
-    messages.textContent = "Fleet deployed! Begin your attack.";
+    showMessage("Fleet deployed! Begin your attack.");
 
     enemyBoard.addEventListener("click", enemyClickHandler);
 })
