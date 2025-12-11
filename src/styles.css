@@ -145,3 +145,68 @@ button:focus{
     max-width: 80%;
     display: none; /* start hidden */
 }
+
+/** SMOKE PUFF ANIMATION **/
+
+.smoke-plume {
+    position: relative;
+    overflow: visible;
+}
+
+.smoke-plume::before,
+.smoke-plume::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 50%;
+    background: rgba(98, 97, 97, 0.33);
+    filter: blur(2px);
+    pointer-events: none;
+}
+
+/* Main puff */
+.smoke-plume::before {
+    width: 35px;
+    height: 35px;
+    transform: translate(-50%, -50%);
+    animation: puff-main 0.9s ease-out forwards;
+}
+
+/* Secondary puff */
+.smoke-plume::after {
+    width: 22px;
+    height: 22px;
+    transform: translate(-50%, -50%);
+    animation: puff-secondary 1s ease-out forwards;
+}
+
+@keyframes puff-main {
+    0% {
+        opacity: 0.9;
+        transform: translate(-50%, -50%) scale(0.5);
+    }
+    80% {
+        opacity: 0.5;
+        transform: translate(-50%, -65%) scale(1.8);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -80%) scale(2.3);
+    }
+}
+
+@keyframes puff-secondary {
+    0% {
+        opacity: 0.9;
+        transform: translate(-50%, -50%) scale(0.3);
+    }
+    80% {
+        opacity: 0.4;
+        transform: translate(-50%, -70%) scale(1.4);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -90%) scale(1.7);
+    }
+}

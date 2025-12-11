@@ -135,6 +135,14 @@ const humanResult = computer.board.grid[row][col];
         explodeSound.play();
 
         showMessage("Direct hit to the enemy's clowder!");
+
+        const clickedCell = event.target;
+        clickedCell.classList.add("smoke-plume");
+
+        setTimeout(() => {
+        clickedCell.classList.remove("smoke-plume");
+        }, 1100);
+
     } else if (!gameOver && humanResult === "miss") {
         showMessage("Your shot missed the enemy cats.");
     }
