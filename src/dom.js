@@ -10,14 +10,25 @@ import catYowl from "./sounds/cat-yowl.mp3";
     const deployBtn = document.getElementById("deploy");
     const messages = document.getElementById("messages");
 
-// --- MESSAGE DISPLAY FUNCTION ---
-function showMessage(text) {
+// MESSAGE DISPLAY FUNCTION
+
+let messageTimeout = null;
+
+function showMessage(text, persistent = false) {
+    if (messageTimeout) {
+        clearTimeout(messageTimeout);
+        messageTimeout = null;
+        }
+
     messages.textContent = text;
     messages.style.display = "block";
 
-    setTimeout(() => {
-        messages.style.display = "none";
-    }, 2000);
+    if (!persistent) {
+        setTimeout(() => {
+            messages.textContent = "";
+            messages.style.display = "none"; 
+        }, 2000);
+    }
 }
 
 
@@ -92,8 +103,10 @@ function renderEnemyBoard(boardElement, grid) {
         }
     }
 }
+let gameOver = false;
 
 function enemyClickHandler(event) {
+    if (gameOver) return; 
     if (!event.target.classList.contains("cell")) return;
 
     let row = Number(event.target.dataset.row);
@@ -107,37 +120,41 @@ function enemyClickHandler(event) {
 
 const humanResult = computer.board.grid[row][col];
 
-    if (humanResult === "hit") {
-        showMessage("Direct hit on the enemy!");
-    } else if (humanResult === "miss") {
+    if (!gameOver && humanResult === "hit") {
+        showMessage("Direct hit to the enemy's clowder!");
+    } else if (!gameOver && humanResult === "miss") {
         showMessage("Your shot missed the enemy cats.");
     }
 
     if (computer.board.allShipsSunk()) {
-        showMessage("You win! All enemy cats exploded!");
+        gameOver = true;
+        showMessage("You win! All enemy cats exploded!", true);
+        enemyBoard.removeEventListener("click", enemyClickHandler);
         return;
     }
 
     if (human.board.allShipsSunk()) {
-        showMessage("Defeat... The enemy exploded your entire clowder.");
+        gameOver = true;
+        showMessage("Defeat... The enemy exploded your entire clowder.", true);
+        enemyBoard.removeEventListener("click", enemyClickHandler);
         return;
     }
 
     const lastMove = computer.prevMoves[computer.prevMoves.length - 1];
 
-    if (lastMove) {
+    if (!gameOver && lastMove) {
         const [cRow, cCol] = lastMove;
         const compResult = human.board.grid[cRow][cCol];
 
         if (compResult === "hit") {
             setTimeout(() => {
-            showMessage("The enemy exploded one of your cats!");
-            }, 1500);
+            if (!gameOver) showMessage("The enemy exploded one of your cats!");
+            }, 2000);
         } 
         else if (compResult === "miss") {
             setTimeout(() => {
-                showMessage(" The enemy missed their shot.")
-            }, 1500);
+                if (!gameOver) showMessage(" The enemy missed their shot.")
+            }, 2000);
         }
     }
 }
@@ -146,7 +163,8 @@ deployBtn.addEventListener("click", () => {
     startGame();
     renderFleetBoard(fleetBoard, human.board.grid);
 
-    showMessage("Fleet deployed! Begin your attack.");
+    showMessage("Clowder deployed! Begin your attack.");
 
     enemyBoard.addEventListener("click", enemyClickHandler);
 })
+
