@@ -1,7 +1,7 @@
 # 🐾 Exploding Cat Battleship  
 _A chaotic feline twist on the classic Battleship game._
 
-**Live Demo:** → _Coming Soon_  
+**Live Demo:** → (https://ebey04.github.io/battleship/)  
 
 Exploding Cat Battleship is a browser-based strategy game built with modular JavaScript, Webpack, and test-driven development. It’s colorful, loud (literally), and absolutely overrun by angry cats. Each hit triggers a small explosion animation and a matching cat sound effect — which, for the record, caused my own cat, Archie, to lose his mind throughout most of development.
 
