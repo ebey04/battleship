@@ -1,4 +1,6 @@
 import { startGame, handleTurn, human, computer} from './index.js';
+import catYowl from "./sounds/cat-yowl.mp3";
+
 
 // STATIC HTML ELEMENTS
     const fleetBoard = document.getElementById("fleet-board");
@@ -25,11 +27,13 @@ function gridCreation(boardElement) {
         }
     }
 
-startGameBtn.addEventListener("click", () => {
-    console.log("Start button clicked!");
+const yowlSound = new Audio(catYowl);
+yowlSound.preload = "auto";
 
-    console.log("fleetBoard:", fleetBoard);
-    console.log("enemyBoard:", enemyBoard);
+startGameBtn.addEventListener("click", () => {
+    yowlSound.currentTime = 0;
+    yowlSound.volume = 0.4; 
+    yowlSound.play();
 
     overlay.classList.add("hidden");
     gridCreation(fleetBoard)
