@@ -83,7 +83,9 @@ function renderFleetBoard(boardElement, grid) {
             else if (grid[row][col] === "miss") {
                 cellDiv.style.backgroundColor = "white";
             }
-            else { cellDiv.style.backgroundColor = "grey"};
+            else if (typeof grid[row][col] === "object") {
+                cellDiv.style.backgroundColor = grid[row][col].color;
+            }
         }
     }
 }
@@ -169,7 +171,7 @@ const humanResult = computer.board.grid[row][col];
 
         if (compResult === "hit") {
         explodeSound.currentTime = 0;
-        explodeSound.volume = 0.4;
+        explodeSound.volume = 0.2;
         explodeSound.play();
         
             setTimeout(() => {

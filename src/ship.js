@@ -1,7 +1,8 @@
 class Ship {
-    constructor(length) {
+    constructor(length, color = "gray") {
         this.length = length;
         this.hits = 0;
+        this.color = color;   // <-- now 'color' IS a parameter
     }
 
     hit() {

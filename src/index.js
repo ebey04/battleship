@@ -56,52 +56,57 @@ function endGame(winner) {
 }
 
 //MAIN GAMEPLAY ENGINE
+
 function handleTurn(coord) {
     if (gameOver) return;
 
     const opponent = getOpponent(currentPlayer);
 
-    // HUMAN TURN
     if (currentPlayer === human) {
         currentPlayer.attack(opponent.board, coord);
     }
 
-    // Check win
     if (opponent.board.allShipsSunk()) {
         endGame(currentPlayer);
         return;
     }
 
-    // Switch to computer
     currentPlayer = computer;
 
     const compCoord = computer.attack(human.board);
 
-
-    // Check win
     if (human.board.allShipsSunk()) {
         endGame(computer);
         return;
     }
 
-    // Switch back to human
     currentPlayer = human;
 }
 
 
 
 // START THE GAME
+
+const catColors = [
+    "#1a1a1a",   // black
+    "#d98c3c",   // orange tabby
+    "#8b5a2b",   // brown tabby
+    "#c0c0c0",   // grey
+    "#f2f2f2"    // white
+];
+
 function startGame() {
     human = new Player(false); 
     computer = new Player(true); 
 
-    humanFleet = [
-    new Ship(5),
-    new Ship(4),
-    new Ship(3),
-    new Ship(3),
-    new Ship(2),
+humanFleet = [
+    new Ship(5, catColors[0]),
+    new Ship(4, catColors[1]),
+    new Ship(3, catColors[2]),
+    new Ship(3, catColors[3]),
+    new Ship(2, catColors[4]),
 ];
+
     computerFleet = [
     new Ship(5),
     new Ship(4),
