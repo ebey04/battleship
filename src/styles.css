@@ -44,7 +44,7 @@ html, body, main {
 }
 
 .board {
-        display: grid;
+    display: grid;
     grid-template-columns: repeat(10, 1fr);
     gap: 4px;                 /* space between squares */
     width: 90%;               /* limit width so cells don’t stretch */
