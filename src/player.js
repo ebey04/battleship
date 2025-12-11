@@ -1,4 +1,4 @@
-const Gameboard = require('./gameboard');
+import Gameboard from "./gameboard.js";
 
 class Player {
     constructor(isComputer = false) {
@@ -18,9 +18,11 @@ class Player {
         }
         opponentBoard.receiveAttack(coord);
         this.prevMoves.push(coord);
+
+        return coord;
     }
 }
 
 
 
-module.exports = Player;
+export default Player;

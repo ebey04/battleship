@@ -1,8 +1,9 @@
 import './styles.css';
+import './dom.js';
+import Ship from "./ship.js";
+import Gameboard from "./gameboard.js";
+import Player from "./player.js";
 
-const Gameboard = require('./gameboard');
-const Ship = require('./ship');
-const Player = require('./player');
 
 // CREATE PLAYERS
 let human;
@@ -19,24 +20,31 @@ let currentPlayer;
 let gameOver = false
 
 // WORLD RULES/HELPER FUNCTIONS
-
 function randomizeFleet(player, fleetArray) {
-    for (const ship of fleetArray) {
+    for (let ship of fleetArray) {
         let placed = false;
+        let attempts = 0;
 
         while (!placed) {
+            attempts++;
+
+            // safety valve to avoid infinite loops
+            if (attempts > 2000) {
+                console.warn("Restarting fleet placement due to overflow…");
+                player.board = new Gameboard();   // reset board
+                return randomizeFleet(player, fleetArray); 
+            }
+
             const row = Math.floor(Math.random() * 10);
             const col = Math.floor(Math.random() * 10);
             const coord = [row, col];
-
-            const rand = Math.floor(Math.random() * 2); 
-            const directions = ['horizontal', 'vertical'];
-            const direction = directions[rand];
+            const direction = Math.random() < 0.5 ? "horizontal" : "vertical";
 
             placed = player.board.placeShip(ship, coord, direction);
         }
     }
 }
+
 
 function getOpponent(player) {
     return player === human ? computer : human;
@@ -56,10 +64,6 @@ function handleTurn(coord) {
     // HUMAN TURN
     if (currentPlayer === human) {
         currentPlayer.attack(opponent.board, coord);
-    } 
-    // COMPUTER TURN
-    else {
-        currentPlayer.attack(opponent.board);
     }
 
     // Check win
@@ -68,16 +72,22 @@ function handleTurn(coord) {
         return;
     }
 
-    // Switch players
-    currentPlayer = opponent;
+    // Switch to computer
+    currentPlayer = computer;
 
-    // COMPUTER PLAYS AUTOMATICALLY *BUT SAFELY*
-    if (currentPlayer === computer) {
-        setTimeout(() => {
-            handleTurn();
-        }, 300); // delay prevents infinite recursive locking
+    const compCoord = computer.attack(human.board);
+
+
+    // Check win
+    if (human.board.allShipsSunk()) {
+        endGame(computer);
+        return;
     }
+
+    // Switch back to human
+    currentPlayer = human;
 }
+
 
 
 // START THE GAME
@@ -108,5 +118,4 @@ function startGame() {
     gameOver = false;
 }
 
-
-module.exports = { startGame, handleTurn, human, computer};
+export { startGame, handleTurn, human, computer };

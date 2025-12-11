@@ -48,6 +48,8 @@ class Gameboard {
         });
 
         this.ships.push(ship);
+
+        return true;
     }
         receiveAttack([row, col]) {
         const target = this.grid[row][col];
@@ -70,4 +72,4 @@ class Gameboard {
 
 }
 
-module.exports = Gameboard;
+export default Gameboard;

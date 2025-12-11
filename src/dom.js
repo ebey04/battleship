@@ -1,12 +1,16 @@
 import { startGame, handleTurn, human, computer} from './index.js';
 
 // STATIC HTML ELEMENTS
-const deployBtn    = document.getElementById('deploy');
-const fleetBoard   = document.getElementById('fleet-board');
-const enemyBoard   = document.getElementById('enemy-board');
-const overlay      = document.getElementById('overlay');
-const startGameBtn = document.getElementById('start-game');
-const messages     = document.getElementById('messages');
+    const fleetBoard = document.getElementById("fleet-board");
+    const enemyBoard = document.getElementById("enemy-board");
+    const overlay = document.getElementById("overlay");
+    const startGameBtn = document.getElementById("start-game");
+    const deployBtn = document.getElementById("deploy");
+    const messages = document.getElementById("messages");
+
+
+console.log("dom.js loaded");
+
 
 
 function gridCreation(boardElement) {
@@ -22,6 +26,11 @@ function gridCreation(boardElement) {
     }
 
 startGameBtn.addEventListener("click", () => {
+    console.log("Start button clicked!");
+
+    console.log("fleetBoard:", fleetBoard);
+    console.log("enemyBoard:", enemyBoard);
+
     overlay.classList.add("hidden");
     gridCreation(fleetBoard)
     gridCreation(enemyBoard)
