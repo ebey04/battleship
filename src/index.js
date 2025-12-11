@@ -1,3 +1,5 @@
+import './styles.css';
+
 const Gameboard = require('./gameboard');
 const Ship = require('./ship');
 const Player = require('./player');
@@ -46,29 +48,37 @@ function endGame(winner) {
 }
 
 //MAIN GAMEPLAY ENGINE
-
 function handleTurn(coord) {
     if (gameOver) return;
 
     const opponent = getOpponent(currentPlayer);
 
+    // HUMAN TURN
     if (currentPlayer === human) {
         currentPlayer.attack(opponent.board, coord);
-    } else {
+    } 
+    // COMPUTER TURN
+    else {
         currentPlayer.attack(opponent.board);
     }
 
+    // Check win
     if (opponent.board.allShipsSunk()) {
         endGame(currentPlayer);
         return;
     }
 
+    // Switch players
     currentPlayer = opponent;
 
+    // COMPUTER PLAYS AUTOMATICALLY *BUT SAFELY*
     if (currentPlayer === computer) {
-        handleTurn(); 
+        setTimeout(() => {
+            handleTurn();
+        }, 300); // delay prevents infinite recursive locking
     }
 }
+
 
 // START THE GAME
 function startGame() {
@@ -97,8 +107,6 @@ function startGame() {
 
     gameOver = false;
 }
-
-startGame();
 
 
 module.exports = { startGame, handleTurn, human, computer};
