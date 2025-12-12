@@ -32,6 +32,16 @@ function showMessage(text, persistent = false) {
     }
 }
 
+//SOUNDS
+
+const yowlSound = new Audio(catYowl);
+yowlSound.preload = "auto";
+
+const explodeSound = new Audio(angryCat);
+explodeSound.preload = "auto"
+
+//WAKE THE CATS BUTTON
+
 function gridCreation(boardElement) {
     for (let i = 0; i < 10; i++) {
         for (let j = 0; j < 10; j++) { 
@@ -43,14 +53,6 @@ function gridCreation(boardElement) {
             }
         }
     }
-
-//SOUNDS
-
-const yowlSound = new Audio(catYowl);
-yowlSound.preload = "auto";
-
-const explodeSound = new Audio(angryCat);
-explodeSound.preload = "auto"
 
 startGameBtn.addEventListener("click", () => {
     yowlSound.currentTime = 0;
