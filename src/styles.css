@@ -95,43 +95,43 @@ html, body, main {
 /**BUTTONS **/
 
 #start-game, #reset-game{
-  font-size: 2rem;
-  padding: 1rem;
-  border-radius: 8px;
-  cursor: pointer;
-  box-shadow: 0 4px 8px rgb(126, 250, 128);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-  font-family: sans-serif;
+    font-size: 2rem;
+    padding: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgb(126, 250, 128);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    font-family: sans-serif;
 }
 
 
 #deploy{
-  width: 15rem;
-  margin-left: 12rem;
-  margin-top: 1rem;
-  font-size: 1.2rem;
-  padding: .5rem;
-  border-radius: 8px;
-  border: none;
-  box-shadow: 0 4px 8px rgb(126, 250, 128);
-  cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-  font-family: sans-serif;
+    width: 15rem;
+    margin-left: 12rem;
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    padding: .5rem;
+    border-radius: 8px;
+    border: none;
+    box-shadow: 0 4px 8px rgb(126, 250, 128);
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    font-family: sans-serif;
 }
 
 button:hover {
-  transform: translate(-3px, -2px);
-  box-shadow: 0 4px 8px rgb(126, 250, 128);
+    transform: translate(-3px, -2px);
+    box-shadow: 0 4px 8px rgb(126, 250, 128);
 }
 
 button:active {
-  transform: translateY(0);
-  box-shadow: 0 4px 8px rgba(126, 250, 128, 0.792);
+    transform: translateY(0);
+    box-shadow: 0 4px 8px rgba(126, 250, 128, 0.792);
 }
 
 button:focus{
-  background-color:rgba(126, 250, 128, 0.792);
-  border: none;
+    background-color:rgba(126, 250, 128, 0.792);
+    border: none;
 }
 
 /**MESSAGE CENTER**/
@@ -216,4 +216,20 @@ button:focus{
         opacity: 0;
         transform: translate(-50%, -90%) scale(1.7);
     }
+}
+
+/** SHIP IMAGES **/
+
+.ship-start {
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+.ship-start.horizontal {
+    background-image: url("./imgs/hor-cat.svg");
+}
+
+.ship-start.vertical {
+    background-image: url("./imgs/ver-cat.svg");
 }
