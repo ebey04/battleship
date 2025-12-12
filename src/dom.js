@@ -17,22 +17,25 @@ import angryCat from "./sounds/angry-cat.mp3"
 
 let messageTimeout = null;
 
-function showMessage(text, persistent = false) {
+function showMessage(text) {
+    // Clear any existing message timeout
     if (messageTimeout) {
         clearTimeout(messageTimeout);
         messageTimeout = null;
-        }
+    }
 
+    // Show message
     messages.textContent = text;
     messages.style.display = "block";
 
-    if (!persistent) {
-        messageTimeout = setTimeout(() => {
-            messages.textContent = "";
-            messages.style.display = "none"; 
-        }, 2000);
-    }
+    // Auto-clear after 2 seconds
+    messageTimeout = setTimeout(() => {
+        messages.textContent = "";
+        messages.style.display = "none";
+        messageTimeout = null;
+    }, 2000);
 }
+
 
 //SOUNDS
 
@@ -118,25 +121,29 @@ function renderEnemyBoard(boardElement, grid) {
 
 //ENEMY CLICK HANDLER 
 
-function enemyClickHandler(event) {
+let canClick = true;
+
+async function enemyClickHandler(event) {
+    if (!canClick) return;
     if (!event.target.classList.contains("cell")) return;
 
-    let row = Number(event.target.dataset.row);
-    let col = Number(event.target.dataset.col);
-    let coord = [row, col];
+    canClick = false;
 
-    handleTurn(coord);
+    const row = Number(event.target.dataset.row);
+    const col = Number(event.target.dataset.col);
+    const coord = [row, col];
+
+    const turnPromise = handleTurn(coord);
 
     renderFleetBoard(fleetBoard, human.board.grid);
     renderEnemyBoard(enemyBoard, computer.board.grid);
 
-const humanResult = computer.board.grid[row][col];
+    const humanResult = computer.board.grid[row][col];
 
     if (humanResult === "hit") {
         explodeSound.currentTime = 0;
         explodeSound.volume = 0.4;
         explodeSound.play();
-
         showMessage("Direct hit to the enemy's clowder!");
 
         const clickedCell = event.target;
@@ -151,45 +158,44 @@ const humanResult = computer.board.grid[row][col];
     }
 
     if (computer.board.allShipsSunk()) {
-        showMessage("You win! All enemy cats exploded!", true);
+        showMessage("You win! All enemy cats exploded!");
         enemyBoard.classList.add("disabled");
-
-        resetGameBtn.classList.remove("hidden")
+        resetGameBtn.classList.remove("hidden");
         resetOverlay.classList.remove("hidden");
-        return;
+        return; // stay locked
     }
 
-    if (human.board.allShipsSunk()) {
-        showMessage("Defeat... The enemy exploded your entire clowder.", true);
-        enemyBoard.classList.add("disabled");
+    await turnPromise;
 
-        resetGameBtn.classList.remove("hidden")
-        resetOverlay.classList.remove("hidden");
-        return;
-    }
+    renderFleetBoard(fleetBoard, human.board.grid);
 
     const lastMove = computer.prevMoves[computer.prevMoves.length - 1];
-
     if (lastMove) {
         const [cRow, cCol] = lastMove;
         const compResult = human.board.grid[cRow][cCol];
 
         if (compResult === "hit") {
-        explodeSound.currentTime = 0;
-        explodeSound.volume = 0.2;
-        explodeSound.play();
-        
-            setTimeout(() => {
+            explodeSound.currentTime = 0;
+            explodeSound.volume = 0.2;
+            explodeSound.play();
             showMessage("The enemy exploded one of your cats!");
-            }, 2000);
-        } 
-        else if (compResult === "miss") {
-            setTimeout(() => {
-                showMessage(" The enemy missed their shot.")
-            }, 2000);
+        } else if (compResult === "miss") {
+            showMessage("The enemy missed their shot.");
         }
     }
+
+    if (human.board.allShipsSunk()) {
+        showMessage("Defeat... The enemy exploded your entire clowder.");
+        enemyBoard.classList.add("disabled");
+        resetGameBtn.classList.remove("hidden");
+        resetOverlay.classList.remove("hidden");
+        return; 
+    }
+
+    canClick = true;
 }
+
+
 
 // DEPLOY BUTTON
 
@@ -205,6 +211,12 @@ deployBtn.addEventListener("click", () => {
 // RESET BUTTON
 
 resetGameBtn.addEventListener("click", () => {
+    canClick = true;
+
+    messages.textContent = "";
+    messages.style.display = "none";
+
+
     fleetBoard.innerHTML = "";
     enemyBoard.innerHTML = "";
 

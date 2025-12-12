@@ -4,6 +4,7 @@ import Ship from "./ship.js";
 import Gameboard from "./gameboard.js";
 import Player from "./player.js";
 
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 // CREATE PLAYERS
 let human;
@@ -57,31 +58,33 @@ function endGame(winner) {
 
 //MAIN GAMEPLAY ENGINE
 
-function handleTurn(coord) {
-    if (gameOver) return;
+async function handleTurn(coord) {
+    if (gameOver) return { ended: true };
 
     const opponent = getOpponent(currentPlayer);
 
+    let humanResult = null;
     if (currentPlayer === human) {
-        currentPlayer.attack(opponent.board, coord);
+        humanResult = currentPlayer.attack(opponent.board, coord); 
     }
 
     if (opponent.board.allShipsSunk()) {
         endGame(currentPlayer);
-        return;
+        return { ended: true, winner: "human" };
     }
-    setTimeout(() => {
-        currentPlayer = computer;
 
-        const compCoord = computer.attack(human.board);
+    await sleep(1100);
 
-        if (human.board.allShipsSunk()) {
-            endGame(computer);
-            return;
-        }
-        
-        currentPlayer = human;
-    }, 1100);
+    currentPlayer = computer;
+    const compCoord = computer.attack(human.board);
+
+    if (human.board.allShipsSunk()) {
+        endGame(computer);
+        return { ended: true, winner: "computer", compCoord };
+    }
+
+    currentPlayer = human;
+    return { ended: false, compCoord };
 }
 
 
