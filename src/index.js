@@ -70,17 +70,18 @@ function handleTurn(coord) {
         endGame(currentPlayer);
         return;
     }
+    setTimeout(() => {
+        currentPlayer = computer;
 
-    currentPlayer = computer;
+        const compCoord = computer.attack(human.board);
 
-    const compCoord = computer.attack(human.board);
-
-    if (human.board.allShipsSunk()) {
-        endGame(computer);
-        return;
-    }
-
-    currentPlayer = human;
+        if (human.board.allShipsSunk()) {
+            endGame(computer);
+            return;
+        }
+        
+        currentPlayer = human;
+    }, 1100);
 }
 
 
