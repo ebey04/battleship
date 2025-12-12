@@ -9,6 +9,8 @@ import angryCat from "./sounds/angry-cat.mp3"
     const overlay = document.getElementById("overlay");
     const startGameBtn = document.getElementById("start-game");
     const deployBtn = document.getElementById("deploy");
+    const resetGameBtn = document.getElementById("reset-game");
+    const resetOverlay = document.getElementById("reset-overlay");
     const messages = document.getElementById("messages");
 
 // MESSAGE DISPLAY FUNCTION
@@ -25,7 +27,7 @@ function showMessage(text, persistent = false) {
     messages.style.display = "block";
 
     if (!persistent) {
-        setTimeout(() => {
+        messageTimeout = setTimeout(() => {
             messages.textContent = "";
             messages.style.display = "none"; 
         }, 2000);
@@ -116,10 +118,7 @@ function renderEnemyBoard(boardElement, grid) {
 
 //ENEMY CLICK HANDLER 
 
-let gameOver = false;
-
 function enemyClickHandler(event) {
-    if (gameOver) return; 
     if (!event.target.classList.contains("cell")) return;
 
     let row = Number(event.target.dataset.row);
@@ -133,7 +132,7 @@ function enemyClickHandler(event) {
 
 const humanResult = computer.board.grid[row][col];
 
-    if (!gameOver && humanResult === "hit") {
+    if (humanResult === "hit") {
         explodeSound.currentTime = 0;
         explodeSound.volume = 0.4;
         explodeSound.play();
@@ -147,27 +146,31 @@ const humanResult = computer.board.grid[row][col];
         clickedCell.classList.remove("smoke-plume");
         }, 1100);
 
-    } else if (!gameOver && humanResult === "miss") {
+    } else if (humanResult === "miss") {
         showMessage("Your shot missed the enemy cats.");
     }
 
     if (computer.board.allShipsSunk()) {
-        gameOver = true;
         showMessage("You win! All enemy cats exploded!", true);
-        enemyBoard.removeEventListener("click", enemyClickHandler);
+        enemyBoard.classList.add("disabled");
+
+        resetGameBtn.classList.remove("hidden")
+        resetOverlay.classList.remove("hidden");
         return;
     }
 
     if (human.board.allShipsSunk()) {
-        gameOver = true;
         showMessage("Defeat... The enemy exploded your entire clowder.", true);
-        enemyBoard.removeEventListener("click", enemyClickHandler);
+        enemyBoard.classList.add("disabled");
+
+        resetGameBtn.classList.remove("hidden")
+        resetOverlay.classList.remove("hidden");
         return;
     }
 
     const lastMove = computer.prevMoves[computer.prevMoves.length - 1];
 
-    if (!gameOver && lastMove) {
+    if (lastMove) {
         const [cRow, cCol] = lastMove;
         const compResult = human.board.grid[cRow][cCol];
 
@@ -177,12 +180,12 @@ const humanResult = computer.board.grid[row][col];
         explodeSound.play();
         
             setTimeout(() => {
-            if (!gameOver) showMessage("The enemy exploded one of your cats!");
+            showMessage("The enemy exploded one of your cats!");
             }, 2000);
         } 
         else if (compResult === "miss") {
             setTimeout(() => {
-                if (!gameOver) showMessage(" The enemy missed their shot.")
+                showMessage(" The enemy missed their shot.")
             }, 2000);
         }
     }
@@ -199,3 +202,21 @@ deployBtn.addEventListener("click", () => {
     enemyBoard.addEventListener("click", enemyClickHandler);
 })
 
+// RESET BUTTON
+
+resetGameBtn.addEventListener("click", () => {
+    fleetBoard.innerHTML = "";
+    enemyBoard.innerHTML = "";
+
+    resetGameBtn.classList.add("hidden");
+    resetOverlay.classList.add("hidden");
+
+    gridCreation(fleetBoard);
+    gridCreation(enemyBoard);
+
+    enemyBoard.classList.remove("disabled");
+
+    startGame();
+
+    renderFleetBoard(fleetBoard, human.board.grid);
+})

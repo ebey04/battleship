@@ -76,7 +76,13 @@ html, body, main {
     display: none !important;
 }
 
-#overlay {
+.disabled {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+
+#overlay, #reset-overlay {
     position: fixed;
     inset: 0;
     background: rgba(0,0,0,0.6);
@@ -88,7 +94,7 @@ html, body, main {
 
 /**BUTTONS **/
 
-#start-game{
+#start-game, #restart-game{
   font-size: 2rem;
   padding: 1rem;
   border-radius: 8px;
@@ -97,6 +103,7 @@ html, body, main {
   transition: transform 0.15s ease, box-shadow 0.15s ease;
   font-family: sans-serif;
 }
+
 
 #deploy{
   width: 15rem;
