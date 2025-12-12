@@ -94,7 +94,7 @@ html, body, main {
 
 /**BUTTONS **/
 
-#start-game, #restart-game{
+#start-game, #reset-game{
   font-size: 2rem;
   padding: 1rem;
   border-radius: 8px;
