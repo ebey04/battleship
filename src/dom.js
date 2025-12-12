@@ -84,12 +84,28 @@ function shipStart(grid,row, col) {
     }
 
     if (col > 9 && grid[row][col-1] === ship) {
-        return fasle;
+        return false;
     }
 
     return true;
 }
 
+function shipDir(grid, row, col) {
+    let ship = grid[row][col];
+
+    if (!ship || typeof ship !== "object") {
+        return null;
+    }
+
+    if (col < 9 && grid[row][col + 1] === ship) {
+        return "horizontal";
+        
+    }
+    if (row < 9 && grid[row + 1][col] === ship){
+        return "vertical";
+    }
+    return null;
+}
 
 function renderFleetBoard(boardElement, grid) {
     const cells = boardElement.querySelectorAll(".cell");
@@ -110,7 +126,12 @@ function renderFleetBoard(boardElement, grid) {
                 cellDiv.style.backgroundColor = "white";
             }
             else if (typeof grid[row][col] === "object") {
-                cellDiv.style.backgroundColor = grid[row][col].color;
+                if (shipStart(grid, row, col)) {
+                        const dir = shipDir(grid, row, col);
+                        cellDiv.classList.add("ship-start", dir);
+                } else {
+                        cellDiv.classList.add("ship-body");
+                    }
             }
         }
     }
