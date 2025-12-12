@@ -72,6 +72,25 @@ startGameBtn.addEventListener("click", () => {
 
 // BOARD RENDERING
 
+function shipStart(grid,row, col) {
+    let ship = grid[row][col];
+
+    if (!ship || typeof ship !== "object") {
+        return false;
+    }
+
+    if (row > 0 && grid[row-1][col] === ship) {
+        return false;
+    }
+
+    if (col > 9 && grid[row][col-1] === ship) {
+        return fasle;
+    }
+
+    return true;
+}
+
+
 function renderFleetBoard(boardElement, grid) {
     const cells = boardElement.querySelectorAll(".cell");
 
