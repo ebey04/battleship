@@ -83,7 +83,7 @@ function shipStart(grid,row, col) {
         return false;
     }
 
-    if (col > 9 && grid[row][col-1] === ship) {
+    if (col > 0 && grid[row][col-1] === ship) {
         return false;
     }
 
