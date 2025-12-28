@@ -127,8 +127,16 @@ function renderFleetBoard(boardElement, grid) {
             }
             else if (typeof grid[row][col] === "object") {
                 if (shipStart(grid, row, col)) {
+                        const ship = grid[row][col];
                         const dir = shipDir(grid, row, col);
+
                         cellDiv.classList.add("ship-start", dir);
+
+                        if (dir === "horizontal") {
+                            cellDiv.style.gridColumn = `span ${ship.length}`;
+                        } else {
+        cellDiv.style.gridRow = `span ${ship.length}`;
+    }
                 } else {
                         cellDiv.classList.add("ship-body");
                     }

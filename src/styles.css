@@ -233,3 +233,6 @@ button:focus{
 .ship-start.vertical {
     background-image: url("./imgs/ver-cat.svg");
 }
+.ship-body{
+    background: transparent;
+}
