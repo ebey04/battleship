@@ -54,6 +54,7 @@ html, body, main {
     padding: 1rem;
     border: 2px solid black;
     box-shadow: 0 5px 10px rgba(7, 7, 7, 0.4);
+    position: relative;
 }
 
 #enemy-board{
@@ -225,7 +226,36 @@ button:focus{
     background-size: contain;
     background-position: center;
     aspect-ratio: unset;
+    background-color: transparent;
+    border: none;
+    position: relative;
 }
+
+.ship-start::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: left center;
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* horizontal ship */
+.ship-start.horizontal::after {
+    background-image: url("./imgs/hor-cat.svg");
+    width: calc(100% * var(--ship-length));
+    height: 100%;
+}
+
+/* vertical ship */
+.ship-start.vertical::after {
+    background-image: url("./imgs/ver-cat.svg");
+    height: calc(100% * var(--ship-length));
+    width: 100%;
+}
+
 
 .ship-start.horizontal {
     background-image: url("./imgs/hor-cat.svg");

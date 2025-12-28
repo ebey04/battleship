@@ -110,9 +110,8 @@ function shipDir(grid, row, col) {
 function renderFleetBoard(boardElement, grid) {
     const cells = boardElement.querySelectorAll(".cell");
 
-    for (let row = 0; row < 10; row++){
+    for (let row = 0; row < 10; row++) {
         for (let col = 0; col < 10; col++) {
-
             const index = row * 10 + col;
             const cellDiv = cells[index];
 
@@ -120,35 +119,31 @@ function renderFleetBoard(boardElement, grid) {
             cellDiv.style.gridColumn = "";
             cellDiv.style.gridRow = "";
             cellDiv.style.backgroundColor = "";
-    
+
             if (grid[row][col] === null) {
                 cellDiv.style.backgroundColor = "blue";
-            }
+            } 
             else if (grid[row][col] === "hit") {
                 cellDiv.style.backgroundColor = "red";
-            }
+            } 
             else if (grid[row][col] === "miss") {
                 cellDiv.style.backgroundColor = "white";
-            }
+            } 
             else if (typeof grid[row][col] === "object") {
                 if (shipStart(grid, row, col)) {
-                        const ship = grid[row][col];
-                        const dir = shipDir(grid, row, col);
+                    const ship = grid[row][col];
+                    const dir = shipDir(grid, row, col);
 
-                        cellDiv.classList.add("ship-start", dir);
-                        cellDiv.style.backgroundColor = "transparent";
-
-                        if (dir === "horizontal") {
-                            cellDiv.style.gridColumn = `span ${ship.length}`;} 
-                        if (dir === "vertical")
-                            cellDiv.style.gridRow = `span ${ship.length}`;}
+                    cellDiv.classList.add("ship-start", dir);
+                    cellDiv.style.setProperty("--ship-length", ship.length);
                 } else {
-                        cellDiv.classList.add("ship-body");
-                        cellDiv.style.backgroundColor = "transparent";
-                    }
+                    cellDiv.classList.add("ship-body");
+                }
             }
         }
+    }
 }
+
 
 function renderEnemyBoard(boardElement, grid) {
     const cells = boardElement.querySelectorAll(".cell");
