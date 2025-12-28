@@ -138,10 +138,9 @@ function renderFleetBoard(boardElement, grid) {
                         cellDiv.classList.add("ship-start", dir);
 
                         if (dir === "horizontal") {
-                            cellDiv.style.gridColumn = `span ${ship.length}`;
-                        } else {
-        cellDiv.style.gridRow = `span ${ship.length}`;
-    }
+                            cellDiv.style.gridColumn = `span ${ship.length}`;} 
+                        if (dir === "vertical")
+                            cellDiv.style.gridRow = `span ${ship.length}`;}
                 } else {
                         cellDiv.classList.add("ship-body");
                     }
