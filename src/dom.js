@@ -112,9 +112,14 @@ function renderFleetBoard(boardElement, grid) {
 
     for (let row = 0; row < 10; row++){
         for (let col = 0; col < 10; col++) {
-            
+
             const index = row * 10 + col;
             const cellDiv = cells[index];
+
+            cellDiv.className = "cell";
+            cellDiv.style.gridColumn = "";
+            cellDiv.style.gridRow = "";
+            cellDiv.style.backgroundColor = "";
     
             if (grid[row][col] === null) {
                 cellDiv.style.backgroundColor = "blue";
