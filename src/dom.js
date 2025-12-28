@@ -148,7 +148,6 @@ function renderFleetBoard(boardElement, grid) {
                     }
             }
         }
-    }
 }
 
 function renderEnemyBoard(boardElement, grid) {

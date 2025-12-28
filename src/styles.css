@@ -57,7 +57,7 @@ html, body, main {
 }
 
 #enemy-board{
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .subheads {
@@ -77,8 +77,8 @@ html, body, main {
 }
 
 .disabled {
-  pointer-events: none;
-  opacity: 0.6;
+    pointer-events: none;
+    opacity: 0.6;
 }
 
 
@@ -224,6 +224,7 @@ button:focus{
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
+    aspect-ratio: unset;
 }
 
 .ship-start.horizontal {
@@ -234,5 +235,5 @@ button:focus{
     background-image: url("./imgs/ver-cat.svg");
 }
 .ship-body{
-    background: transparent;
+    visibility: hidden;
 }
