@@ -136,6 +136,7 @@ function renderFleetBoard(boardElement, grid) {
                         const dir = shipDir(grid, row, col);
 
                         cellDiv.classList.add("ship-start", dir);
+                        cellDiv.style.backgroundColor = "transparent";
 
                         if (dir === "horizontal") {
                             cellDiv.style.gridColumn = `span ${ship.length}`;} 
@@ -143,6 +144,7 @@ function renderFleetBoard(boardElement, grid) {
                             cellDiv.style.gridRow = `span ${ship.length}`;}
                 } else {
                         cellDiv.classList.add("ship-body");
+                        cellDiv.style.backgroundColor = "transparent";
                     }
             }
         }
