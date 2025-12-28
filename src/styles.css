@@ -255,15 +255,6 @@ button:focus{
     height: calc(100% * var(--ship-length));
     width: 100%;
 }
-
-
-.ship-start.horizontal {
-    background-image: url("./imgs/hor-cat.svg");
-}
-
-.ship-start.vertical {
-    background-image: url("./imgs/ver-cat.svg");
-}
 .ship-body{
     visibility: hidden;
 }
